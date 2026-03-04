@@ -1,25 +1,70 @@
+/* ── ekai Brand Tokens ── */
+:root {
+  --ekai-orange: #F37640;
+  --ekai-orange-hover: #e0632f;
+  --ekai-teal: #54A4A0;
+  --ekai-teal-light: #E4F1F1;
+  --ekai-neutral-warm: #F9F5F0;
+  --ekai-dark: #2C2321;
+  --ekai-text: #333;
+  --ekai-text-muted: #666;
+  --ekai-border: #e0dcd8;
+  --ekai-bg: #F9F5F0;
+  --ekai-white: #fff;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
-  background: #f5f5f5;
-  color: #1a1a1a;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--ekai-bg);
+  color: var(--ekai-text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Header / Logo Bar ── */
+
+.header {
+  width: 100%;
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--ekai-white);
+  border-bottom: 1px solid var(--ekai-border);
+}
+
+.header img {
+  height: 28px;
+  width: auto;
+}
+
+/* ── Layout ── */
+
+.page-content {
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  width: 100%;
+  padding: 2rem 1rem;
 }
 
 .container {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: var(--ekai-white);
+  padding: 2.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px rgba(44, 35, 33, 0.06), 0 8px 24px rgba(44, 35, 33, 0.08);
   width: 100%;
-  max-width: 460px;
+  max-width: 520px;
 }
 
 /* ── Progress indicator ── */
@@ -28,69 +73,73 @@ body {
   display: flex;
   align-items: center;
   margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--ekai-border);
 }
 
 .progress-step {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
   flex-shrink: 0;
 }
 
 .progress-dot {
-  width: 2rem;
-  height: 2rem;
+  width: 2.25rem;
+  height: 2.25rem;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.8rem;
   font-weight: 700;
-  border: 2px solid #ccc;
-  color: #999;
-  background: #fff;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  border: 2px solid var(--ekai-border);
+  color: #aaa;
+  background: var(--ekai-white);
+  transition: all 0.25s ease;
 }
 
 .progress-label {
-  font-size: 0.72rem;
-  color: #999;
-  transition: color 0.2s;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  color: #aaa;
+  transition: color 0.25s ease;
 }
 
 .progress-line {
   flex: 1;
   height: 2px;
-  background: #ccc;
+  background: var(--ekai-border);
   margin: 0 0.5rem;
   margin-bottom: 1.25rem;
-  transition: background 0.2s;
+  transition: background 0.25s ease;
 }
 
 .progress-step.active .progress-dot {
-  border-color: #0066cc;
-  background: #0066cc;
+  border-color: var(--ekai-orange);
+  background: var(--ekai-orange);
   color: #fff;
 }
 
 .progress-step.active .progress-label {
-  color: #0066cc;
-  font-weight: 600;
+  color: var(--ekai-orange);
 }
 
 .progress-step.completed .progress-dot {
-  border-color: #0066cc;
-  background: #e8f0fb;
-  color: #0066cc;
+  border-color: var(--ekai-teal);
+  background: var(--ekai-teal-light);
+  color: var(--ekai-teal);
 }
 
 .progress-step.completed .progress-label {
-  color: #0066cc;
+  color: var(--ekai-teal);
 }
 
 .progress-step.completed + .progress-line {
-  background: #0066cc;
+  background: var(--ekai-teal);
 }
 
 /* ── Error ── */
@@ -98,33 +147,82 @@ body {
 .error {
   margin: 0 0 1.5rem;
   padding: 0.75rem 1rem;
-  background: #fff3f3;
-  border: 1px solid #f5c6c6;
-  border-radius: 4px;
-  color: #c0392b;
+  background: #fef2ee;
+  border: 1px solid #f5c6b0;
+  border-left: 3px solid var(--ekai-orange);
+  border-radius: var(--radius-sm);
+  color: #b93a14;
   font-size: 0.9rem;
 }
 
 /* ── Step panels ── */
 
 .step-panel h1 {
-  margin: 0 0 1rem;
-  font-size: 1.3rem;
+  margin: 0 0 0.75rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ekai-dark);
 }
 
-.step-panel p, .step-panel ul, .step-panel ol {
+.step-panel h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ekai-dark);
+}
+
+.step-panel h3 {
+  margin: 1.25rem 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ekai-dark);
+}
+
+.step-panel p,
+.step-panel ul,
+.step-panel ol {
   margin: 0 0 0.75rem;
   font-size: 0.95rem;
-  line-height: 1.55;
-  color: #444;
+  line-height: 1.6;
+  color: var(--ekai-text-muted);
 }
 
-.step-panel ul {
+.step-panel ul,
+.step-panel ol {
   padding-left: 1.25rem;
 }
 
 .step-panel li {
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.35rem;
+}
+
+.step-panel a {
+  color: var(--ekai-teal);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.step-panel a:hover {
+  text-decoration: underline;
+}
+
+/* ── Success step ── */
+
+.step-panel .success-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: var(--ekai-teal-light);
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.step-panel .success-icon svg {
+  width: 28px;
+  height: 28px;
+  color: var(--ekai-teal);
 }
 
 /* ── Form ── */
@@ -136,25 +234,33 @@ body {
 }
 
 label {
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  margin-bottom: 0.375rem;
+  margin-bottom: 0.4rem;
+  color: var(--ekai-dark);
 }
 
 input, select {
-  padding: 0.5rem 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.95rem;
+  border: 1px solid var(--ekai-border);
+  border-radius: var(--radius-sm);
   outline: none;
-  transition: border-color 0.15s;
+  background: var(--ekai-white);
+  color: var(--ekai-text);
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 input:focus, select:focus {
-  border-color: #0066cc;
+  border-color: var(--ekai-teal);
+  box-shadow: 0 0 0 3px rgba(84, 164, 160, 0.15);
 }
 
-/* ── Summary (step 3) ── */
+input::placeholder {
+  color: #bbb;
+}
+
+/* ── Summary ── */
 
 .summary {
   margin: 0 0 1rem;
@@ -166,17 +272,17 @@ input:focus, select:focus {
 
 .summary dt {
   font-weight: 600;
-  color: #555;
+  color: var(--ekai-text-muted);
 }
 
 .summary dd {
   margin: 0;
-  color: #1a1a1a;
+  color: var(--ekai-dark);
 }
 
 .hint {
   font-size: 0.85rem;
-  color: #777;
+  color: #999;
 }
 
 /* ── Actions ── */
@@ -185,33 +291,116 @@ input:focus, select:focus {
   display: flex;
   justify-content: flex-end;
   gap: 0.75rem;
-  margin-top: 1.75rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ekai-border);
 }
 
 button {
-  padding: 0.575rem 1.25rem;
+  padding: 0.625rem 1.5rem;
   font-size: 0.95rem;
   font-weight: 600;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.2s, transform 0.1s;
+}
+
+button:active {
+  transform: scale(0.98);
 }
 
 button:not(.btn-secondary) {
-  background: #0066cc;
+  background: var(--ekai-orange);
   color: #fff;
 }
 
 button:not(.btn-secondary):hover {
-  background: #0052a3;
+  background: var(--ekai-orange-hover);
 }
 
 .btn-secondary {
-  background: #f0f0f0;
-  color: #333;
+  background: var(--ekai-teal-light);
+  color: var(--ekai-teal);
 }
 
 .btn-secondary:hover {
-  background: #e0e0e0;
+  background: #d4e8e8;
+}
+
+/* ── Invite Form (index page) ── */
+
+.invite-card {
+  text-align: center;
+}
+
+.invite-card .logo {
+  margin-bottom: 2rem;
+}
+
+.invite-card .logo img {
+  height: 40px;
+  width: auto;
+}
+
+.invite-card h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ekai-dark);
+  margin: 0 0 0.5rem;
+}
+
+.invite-card p {
+  color: var(--ekai-text-muted);
+  font-size: 0.95rem;
+  margin: 0 0 1.75rem;
+  line-height: 1.5;
+}
+
+.invite-card .field {
+  text-align: left;
+}
+
+.invite-card button {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* ── Footer ── */
+
+.footer {
+  padding: 1.5rem 2rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.footer a {
+  color: var(--ekai-teal);
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 560px) {
+  .container {
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    max-width: 100%;
+  }
+
+  .header {
+    padding: 1rem 1.25rem;
+  }
+
+  .progress-label {
+    font-size: 0.62rem;
+  }
 }

@@ -3,15 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloud Setup</title>
+    <title>ekai - Cloud Setup</title>
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
     <link rel="stylesheet" href="/main.css">
 </head>
 <body>
-    <form id="invite-form">
-        <label for="invite-id">Invite ID</label>
-        <input type="text" id="invite-id" name="invite-id" required placeholder="Enter your invite ID">
-        <button type="submit">Continue</button>
-    </form>
+    <header class="header">
+        <img src="/assets/ekai-logo-full.png" alt="ekai" height="28">
+    </header>
+
+    <div class="page-content">
+        <div class="container invite-card">
+            <div class="logo">
+                <img src="/assets/ekai-logo.svg" alt="ekai" height="40">
+            </div>
+            <h1>Cloud Setup</h1>
+            <p>Enter your invite ID to connect your cloud provider account.</p>
+            <form id="invite-form">
+                <div class="field">
+                    <label for="invite-id">Invite ID</label>
+                    <input type="text" id="invite-id" name="invite-id" required placeholder="Enter your invite ID">
+                </div>
+                <button type="submit">Continue</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer">
+        Powered by <a href="https://yourekai.com" target="_blank">ekai</a>
+    </div>
+
     <script>
         document.getElementById('invite-form').addEventListener('submit', function(e) {
             e.preventDefault();
