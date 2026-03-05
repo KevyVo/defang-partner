@@ -70,7 +70,13 @@
                 name="accountId"
                 placeholder="123456789012"
                 required
+                maxlength="14"
+                pattern="[\d\-]{12,14}"
+                inputmode="numeric"
               />
+              <span id="account-id-warning" class="field-warning" hidden>
+                AWS Account ID must be exactly 12 digits
+              </span>
             </div>
             <div class="field">
               <label for="region">AWS Region</label>

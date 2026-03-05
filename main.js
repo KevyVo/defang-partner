@@ -32,6 +32,25 @@ function showStep(n) {
   document.querySelector(".progress").hidden = isSuccess;
   document.querySelector(".actions").hidden = isSuccess;
   currentStep = n;
+  if (n === 2) {
+    validateAccountId();
+  } else {
+    document.getElementById("btn-next").disabled = false;
+  }
+}
+
+function validateAccountId() {
+  const input = document.getElementById("account-id");
+  const warning = document.getElementById("account-id-warning");
+  const btnNext = document.getElementById("btn-next");
+  const value = input.value.trim().replace(/-/g, "");
+  const valid = /^\d{12}$/.test(value);
+  const empty = value.length === 0;
+  warning.hidden = empty || valid;
+  if (currentStep === 2) {
+    btnNext.disabled = !valid;
+  }
+  return valid;
 }
 
 function onNextClick() {
@@ -40,7 +59,7 @@ function onNextClick() {
     if (!form.reportValidity()) return;
     showStep(3);
   } else if (currentStep === 3) {
-    const accountId = document.getElementById("account-id").value;
+    const accountId = document.getElementById("account-id").value.trim().replace(/-/g, "");
     const region = document.getElementById("region").value;
     onSubmit({ accountId, region });
     showStep(4);
@@ -77,7 +96,7 @@ async function onConfirm() {
   confirmError.hidden = true;
   try {
     const apiUrl = DEFAULT_API_URL;
-    const accountId = document.getElementById("account-id").value;
+    const accountId = document.getElementById("account-id").value.trim().replace(/-/g, "");
     const region = document.getElementById("region").value;
 
     const res = await fetch(`${apiUrl}/cloud-invites/${inviteId}/complete`, {
@@ -198,4 +217,5 @@ document.addEventListener("DOMContentLoaded", async function () {
   document.getElementById("btn-back").addEventListener("click", function () {
     if (currentStep > 1) showStep(currentStep - 1);
   });
+  document.getElementById("account-id").addEventListener("input", validateAccountId);
 });
