@@ -15,30 +15,30 @@ on:
           - down
       stack:
         description: The stack to deploy up or down. (Leave blank for default)
-        default: production
+        default: ekaiadmin
 jobs:
   defang:
-    name: Defang ${{ github.event.inputs.action || 'up' }} ${{ github.event.inputs.stack || 'production' }}
+    name: Defang ${{ github.event.inputs.action || 'up' }} ${{ github.event.inputs.stack || 'ekaiadmin' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
     concurrency:
       cancel-in-progress: false
-      group: deploy-defang-partner-${{ github.event.inputs.stack || 'production' }}
+      group: deploy-defang-partner-${{ github.event.inputs.stack || 'ekaiadmin' }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-      - name: Defang ${{ github.event.inputs.action || 'up' }} ${{ github.event.inputs.stack || 'production' }}
+      - name: Defang ${{ github.event.inputs.action || 'up' }} ${{ github.event.inputs.stack || 'ekaiadmin' }}
         uses: DefangLabs/defang-github-action@v1.4.0
         with:
           command: ${{ github.event.inputs.action || 'up' }}
           project: defang-partner
-          stack: ${{ github.event.inputs.stack || 'production' }}
+          stack: ${{ github.event.inputs.stack || 'ekaiadmin' }}
       - name: Deployment Summary
         uses: DefangLabs/defang-github-action@v1.4.0
         with:
           command: services
           project: defang-partner
-          stack: ${{ github.event.inputs.stack || 'production' }}
-    environment: dev
+          stack: ${{ github.event.inputs.stack || 'ekaiadmin' }}
+    environment: ekai
