@@ -9,7 +9,7 @@
   </head>
   <body>
     <header class="header">
-      <img src="/assets/ekai-logo-full.png" alt="ekai" height="28" />
+      <a href="/"><img src="/assets/ekai-logo-full.png" alt="ekai" height="28" /></a>
     </header>
 
     <div class="page-content">
@@ -33,6 +33,11 @@
           <div class="progress-step" data-step="4">
             <div class="progress-dot">4</div>
             <span class="progress-label">Confirm</span>
+          </div>
+          <div class="progress-line progress-line-help"></div>
+          <div class="progress-step progress-step-help" data-step="5">
+            <div class="progress-dot">5</div>
+            <span class="progress-label">Help</span>
           </div>
         </nav>
 
@@ -137,8 +142,8 @@
           </ol>
         </div>
 
-        <!-- Step 5: Success -->
-        <div id="step-5" class="step-panel" hidden>
+        <!-- Step 6: Success -->
+        <div id="step-6" class="step-panel" hidden>
           <div class="success-icon">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
@@ -181,6 +186,63 @@
             button below to complete the setup process.
           </p>
           <p id="confirm-error" class="error" hidden></p>
+          <hr />
+          <p>
+            Having issues?
+            <a href="#" id="troubleshoot-link">Troubleshooting</a>
+          </p>
+        </div>
+
+        <!-- Step 5: Help -->
+        <div id="step-5" class="step-panel" hidden>
+          <h2>Troubleshooting</h2>
+
+          <h3>1. Parameters not set correctly</h3>
+          <p>
+            If the CloudFormation parameters appear empty or incorrect, you can
+            set them manually in the AWS console. Use the values below:
+          </p>
+          <table class="troubleshoot-table">
+            <tr>
+              <td><strong>OIDC Provider Issuer URL</strong></td>
+              <td><code id="ts-issuer"></code> <button class="copy-btn" aria-label="Copy" title="Copy to clipboard">&#128203;</button></td>
+            </tr>
+            <tr>
+              <td><strong>OIDC Trusted Subject Patterns</strong></td>
+              <td><code id="ts-subjects"></code> <button class="copy-btn" aria-label="Copy" title="Copy to clipboard">&#128203;</button></td>
+            </tr>
+            <tr>
+              <td><strong>OIDC Trusted Audiences</strong></td>
+              <td><code id="ts-audiences"></code> <button class="copy-btn" aria-label="Copy" title="Copy to clipboard">&#128203;</button></td>
+            </tr>
+            <tr>
+              <td><strong>CI Role Name</strong></td>
+              <td><code id="ts-rolename"></code> <button class="copy-btn" aria-label="Copy" title="Copy to clipboard">&#128203;</button></td>
+            </tr>
+            <tr>
+              <td><strong>Retain S3 Bucket on Delete</strong></td>
+              <td><code>true</code> <button class="copy-btn" aria-label="Copy" title="Copy to clipboard">&#128203;</button></td>
+            </tr>
+          </table>
+          <p>
+            Copy these values into the corresponding fields in the CloudFormation
+            "Parameters" section before clicking "Create stack".
+          </p>
+
+          <hr />
+
+          <h3>2. Stack already exists</h3>
+          <p>
+            If you see an error that the stack <code>defang-cd</code> already exists,
+            you need to delete the existing stack first:
+          </p>
+          <ol>
+            <li>Go to the <strong>AWS CloudFormation console</strong></li>
+            <li>Find the stack named <strong>defang-cd</strong></li>
+            <li>Select it and click <strong>Delete Stack</strong></li>
+            <li>Wait for the deletion to complete</li>
+            <li>Come back here, click <strong>Back</strong>, then <strong>Launch</strong> again to re-create the stack</li>
+          </ol>
         </div>
 
         <div class="actions">

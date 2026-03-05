@@ -118,6 +118,19 @@ body {
   transition: background 0.25s ease;
 }
 
+.progress-line-help,
+.progress-step-help {
+  display: none !important;
+}
+
+.progress-line-help.visible {
+  display: block !important;
+}
+
+.progress-step-help.visible {
+  display: flex !important;
+}
+
 .progress-step.active .progress-dot {
   border-color: var(--ekai-orange);
   background: var(--ekai-orange);
@@ -206,6 +219,25 @@ body {
   text-decoration: underline;
 }
 
+#step-5 {
+  max-height: 520px;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+#step-5::-webkit-scrollbar {
+  width: 8px;
+}
+
+#step-5::-webkit-scrollbar-thumb {
+  background: var(--ekai-border);
+  border-radius: 4px;
+}
+
+#step-5::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 /* ── Success step ── */
 
 .step-panel .success-icon {
@@ -262,10 +294,6 @@ input:focus, select:focus {
   margin-top: 0.3rem;
 }
 
-button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
 
 input::placeholder {
   color: #bbb;
@@ -339,6 +367,12 @@ button:not(.btn-secondary):hover {
   background: #d4e8e8;
 }
 
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 /* ── Invite Form (index page) ── */
 
 .invite-card {
@@ -394,6 +428,154 @@ button:not(.btn-secondary):hover {
 }
 
 .footer a:hover {
+  text-decoration: underline;
+}
+
+/* ── Troubleshooting Modal ── */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-overlay.visible {
+  display: flex;
+}
+
+.modal {
+  background: var(--ekai-white);
+  border-radius: var(--radius-lg);
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--ekai-border);
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+button.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--ekai-text-muted);
+  padding: 0;
+  width: 2rem;
+  height: 2rem;
+  line-height: 1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button.modal-close:hover {
+  color: var(--ekai-dark);
+  background: var(--ekai-teal-light);
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-body h3 {
+  font-size: 1rem;
+  margin: 0 0 0.5rem;
+  color: var(--ekai-dark);
+}
+
+.modal-body p,
+.modal-body ol {
+  font-size: 0.9rem;
+  color: var(--ekai-text-muted);
+  line-height: 1.6;
+}
+
+.modal-body hr {
+  border: none;
+  border-top: 1px solid var(--ekai-border);
+  margin: 1.25rem 0;
+}
+
+.troubleshoot-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin: 0.75rem 0;
+  font-size: 0.85rem;
+}
+
+.troubleshoot-table td {
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--ekai-border);
+  vertical-align: middle;
+}
+
+.troubleshoot-table td:last-child {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.troubleshoot-table td:last-child code {
+  flex: 1;
+}
+
+.troubleshoot-table td:first-child {
+  width: 40%;
+  font-size: 0.8rem;
+  color: var(--ekai-text-muted);
+}
+
+.troubleshoot-table code {
+  background: #f5f5f5;
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+button.copy-btn {
+  background: none;
+  border: 1px solid var(--ekai-border);
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 2px 5px;
+  font-size: 0.85rem;
+  vertical-align: middle;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+button.copy-btn:hover {
+  opacity: 1;
+  background: var(--ekai-teal-light);
+}
+
+#troubleshoot-link {
+  color: var(--ekai-teal);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+#troubleshoot-link:hover {
   text-decoration: underline;
 }
 

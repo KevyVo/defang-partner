@@ -5,7 +5,7 @@ const AWS_CIROLE_NAME = "defang-cd-CIRole";
 
 const DEFAULT_API_URL = "https://api.defang.io";
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 6;
 let currentStep = 1;
 
 // Populated by fetchInvite() on page load.
@@ -14,19 +14,32 @@ let inviteData = null;
 const inviteId = document.location.pathname.split("/").pop().trim();
 
 function showStep(n) {
+  // Match step 5 height to step 4 before hiding
+  if (n === 5) {
+    const step4 = document.getElementById("step-4");
+    document.getElementById("step-5").style.maxHeight = step4.offsetHeight + "px";
+  }
   for (let i = 1; i <= TOTAL_STEPS; i++) {
     document.getElementById("step-" + i).hidden = i !== n;
+  }
+  // Update progress dots for steps 1-4 only
+  for (let i = 1; i <= 4; i++) {
     const stepEl = document.querySelector(
       ".progress-step[data-step='" + i + "']",
     );
     if (stepEl) {
-      stepEl.classList.toggle("active", i === n);
-      stepEl.classList.toggle("completed", i < n);
+      stepEl.classList.toggle("active", i === n || (n === 5 && i === 4));
+      stepEl.classList.toggle("completed", i < n && i < 5);
     }
   }
+  // Show/hide the help step in the progress bar
+  const isHelp = n === 5;
+  document.querySelector(".progress-line-help").classList.toggle("visible", isHelp);
+  document.querySelector(".progress-step-help").classList.toggle("visible", isHelp);
+
   const isSuccess = n === TOTAL_STEPS;
   document.getElementById("btn-back").hidden = n === 1 || isSuccess;
-  document.getElementById("btn-next").hidden = isSuccess;
+  document.getElementById("btn-next").hidden = isSuccess || isHelp;
   document.getElementById("btn-next").textContent =
     n === 3 ? "Launch" : n === 4 ? "Confirm" : "Next";
   document.querySelector(".progress").hidden = isSuccess;
@@ -89,6 +102,24 @@ function onSubmit(properties) {
   // open this URL in a new tab to avoid losing the query parameters (and thus state) of the current page
   window.open(cloudformationURL, "_blank");
   document.getElementById("cf-link").href = cloudformationURL;
+
+  // Populate troubleshooting modal with the expected parameter values
+  let oidcSubjects;
+  if (refType === "all") {
+    oidcSubjects = `repo:${org}/${repoPattern}:*`;
+  } else if (refType === "branch") {
+    oidcSubjects = `repo:${org}/${repoPattern}:ref:refs/heads/${refPattern}`;
+  } else {
+    oidcSubjects = `repo:${org}/${repoPattern}:environment:${refPattern}`;
+  }
+  const oidcAudiences = [
+    `https://github.com/${org}`,
+    `sts.amazonaws.com`,
+  ];
+  document.getElementById("ts-issuer").textContent = GITHUB_OIDC_ISSUER;
+  document.getElementById("ts-subjects").textContent = oidcSubjects;
+  document.getElementById("ts-audiences").textContent = oidcAudiences.join(",");
+  document.getElementById("ts-rolename").textContent = AWS_CIROLE_NAME;
 }
 
 async function onConfirm() {
@@ -217,5 +248,30 @@ document.addEventListener("DOMContentLoaded", async function () {
   document.getElementById("btn-back").addEventListener("click", function () {
     if (currentStep > 1) showStep(currentStep - 1);
   });
-  document.getElementById("account-id").addEventListener("input", validateAccountId);
+  const accountInput = document.getElementById("account-id");
+  accountInput.addEventListener("input", function () {
+    // Strip any non-digit, non-dash characters
+    this.value = this.value.replace(/[^\d-]/g, "");
+    validateAccountId();
+  });
+
+  // Copy buttons in troubleshooting table
+  document.querySelectorAll(".copy-btn").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const code = this.parentElement.querySelector("code");
+      if (code) {
+        navigator.clipboard.writeText(code.textContent).then(function () {
+          btn.textContent = "\u2705";
+          setTimeout(function () { btn.textContent = "\uD83D\uDCCB"; }, 1500);
+        });
+      }
+    });
+  });
+
+  // Troubleshooting link navigates to help step
+  document.getElementById("troubleshoot-link").addEventListener("click", function (e) {
+    e.preventDefault();
+    showStep(5);
+  });
 });
