@@ -1,0 +1,27 @@
+name: Defang Cert Generate
+on:
+  workflow_dispatch:
+    inputs:
+      stack:
+        description: The stack to generate cert for. (Leave blank for default)
+        default: ekaiadmin
+jobs:
+  cert-generate:
+    name: Defang cert generate ${{ github.event.inputs.stack || 'ekaiadmin' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    concurrency:
+      cancel-in-progress: false
+      group: cert-defang-partner-${{ github.event.inputs.stack || 'ekaiadmin' }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Defang cert generate ${{ github.event.inputs.stack || 'ekaiadmin' }}
+        uses: DefangLabs/defang-github-action@v1.4.0
+        with:
+          command: cert generate --debug -v
+          project: defang-partner
+          stack: ${{ github.event.inputs.stack || 'ekaiadmin' }}
+    environment: ekai
