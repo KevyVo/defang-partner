@@ -144,7 +144,7 @@ function makeCFStackCreateURL(templateURL, args) {
     fragmentParams.set("stackName", args.stackName);
   }
   for (const [k, v] of Object.entries(args.params ?? {})) {
-    fragmentParams.set(`param_${k}`, toString(v));
+    fragmentParams.set(`param_${k}`, String(v));
   }
 
   let baseUrl = `${args.region}.console.aws.amazon.com/cloudformation/home`;
