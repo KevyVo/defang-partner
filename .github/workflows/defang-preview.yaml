@@ -1,0 +1,27 @@
+name: Defang CD Preview
+on:
+  workflow_dispatch:
+    inputs:
+      stack:
+        description: The stack to preview. (Leave blank for default)
+        default: ekaiadmin
+jobs:
+  preview:
+    name: Defang cd preview ${{ github.event.inputs.stack || 'ekaiadmin' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    concurrency:
+      cancel-in-progress: false
+      group: preview-defang-partner-${{ github.event.inputs.stack || 'ekaiadmin' }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Defang cd preview ${{ github.event.inputs.stack || 'ekaiadmin' }}
+        uses: DefangLabs/defang-github-action@v1.4.0
+        with:
+          command: cd preview
+          project: defang-partner
+          stack: ${{ github.event.inputs.stack || 'ekaiadmin' }}
+    environment: ekai
