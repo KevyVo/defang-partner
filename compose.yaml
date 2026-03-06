@@ -1,6 +1,5 @@
 services:
   app:
-    domainname: ek1.ai
     restart: unless-stopped
     build:
       context: .
